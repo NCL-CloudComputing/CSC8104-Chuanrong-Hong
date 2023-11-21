@@ -77,10 +77,7 @@ public class ContactRestService {
             contacts = service.findAllByFirstName(firstname);
             contacts.retainAll(service.findAllByLastName(lastname));
         }
-        Contact x = new Contact();
-        x.setFirstName("xxxx");
-        x.setLastName("xxx");
-        contacts.add(x);
+
         return Response.ok(contacts).build();
     }
 
@@ -130,7 +127,7 @@ public class ContactRestService {
     @Cache
     @Path("/{id:[0-9]+}")
     @Operation(
-            summary = "Fetch a Contact by id--this is a test ",
+            summary = "Fetch a Contact by id",
             description = "Returns a JSON representation of the Contact object with the provided id."
     )
     @APIResponses(value = {
