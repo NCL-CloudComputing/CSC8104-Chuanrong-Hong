@@ -77,7 +77,10 @@ public class ContactRestService {
             contacts = service.findAllByFirstName(firstname);
             contacts.retainAll(service.findAllByLastName(lastname));
         }
-
+        Contact x = new Contact();
+        x.setFirstName("xxxx");
+        x.setLastName("xxx");
+        contacts.add(x);
         return Response.ok(contacts).build();
     }
 
