@@ -127,7 +127,7 @@ public class ContactRestService {
     @Cache
     @Path("/{id:[0-9]+}")
     @Operation(
-            summary = "Fetch a Contact by id, test",
+            summary = "Fetch a Contact by id, this test",
             description = "Returns a JSON representation of the Contact object with the provided id."
     )
     @APIResponses(value = {
