@@ -9,6 +9,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 
 @Entity
+@NamedQueries({
+
+})
 @XmlRootElement
 @Table(name = "hotel",uniqueConstraints = @UniqueConstraint(columnNames = "phone_number"))
 public class Hotel {
@@ -24,8 +27,8 @@ public class Hotel {
 
     @NotNull
     @NotEmpty
-    @Pattern(regexp = "^[a-zA-Z0-9]{6}$", message = "Please input a correct zip code")
-    private String zipCode;
+    @Pattern(regexp = "^[a-zA-Z0-9]{6}$", message = "Please input a correct postal code")
+    private String postalCode;
 
     @NotNull
     @Pattern(regexp = "^\\([2-9][0-8][0-9]\\)\\s?[0-9]{3}\\-[0-9]{4}$",message = "please input correct phone number")
@@ -49,12 +52,12 @@ public class Hotel {
         this.hotelName = hotelName;
     }
 
-    public String getZipCode() {
-        return zipCode;
+    public String getPostalCode() {
+        return postalCode;
     }
 
-    public void setZipCode(String zipCode) {
-        this.zipCode = zipCode;
+    public void setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
     }
 
     public String getPhoneNumber() {
