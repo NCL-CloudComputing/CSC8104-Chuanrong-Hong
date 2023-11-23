@@ -5,7 +5,7 @@ public class ServiceReturn {
 
     private Object content;
 
-    public ServiceReturn(Boolean status, Object content) {
+    public ServiceReturn( Object content , Boolean status) {
         this.status = status;
         this.content = content;
     }
