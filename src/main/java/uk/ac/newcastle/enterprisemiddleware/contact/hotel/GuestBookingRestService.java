@@ -165,7 +165,54 @@ import java.util.logging.Logger;
             return builder.entity(new ServiceReturn(hotelService.getAllHotels(),true)).build();
         }
 
+        public Response booking(Booking booking){
+            Response.ResponseBuilder builder = Response.status(Response.Status.CREATED).entity(new ServiceReturn("success!" , true));
+            if (booking == null) {
+                return Response.status(Response.Status.BAD_REQUEST).entity(new ServiceReturn("request body is null" , false)).build();
+            }
 
+            try{
+                transaction.begin();
+                bookingService.createBooking(booking);
+                if(!customerService.checkCustomer(booking.getCustomerId())){
+                    throw new Exception("customer is not exist!");
+                }
+                if(!hotelService.checkHotel(booking.getHotelId())){
+                    throw new Exception("hotel is not exist!");
+                }
+                transaction.commit();
+            }catch (Exception e){
+                builder = Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new ServiceReturn(e.getMessage() , false));
+                log.info("commit error ----->" + booking.toString());
+                log.info("cause ----->" + e.getMessage() + ":" + e.getCause());
+                if (e.getCause() instanceof ConstraintViolationException || e.getCause() instanceof PersistenceException){
+                    Set<ConstraintViolation<?>> violations = new LinkedHashSet<>();
+                    StringBuffer sb = new StringBuffer();
+                    if(e.getCause() instanceof ConstraintViolationException){
+                        violations = ((ConstraintViolationException)e.getCause()).getConstraintViolations();
+                    }
+                    if(e.getCause() instanceof PersistenceException){
+                        sb.append("already have same record");
+                    }
+                    for (ConstraintViolation<?> violation : violations) {
+                        String errorMessage = violation.getMessage();
+                        sb.append(violation.getPropertyPath());
+                        sb.append(":");
+                        sb.append(errorMessage);
+                        sb.append("|");
+                    }
+                    sb.substring(0,sb.length()-1);
+                    builder = Response.status(Response.Status.CONFLICT).entity(new ServiceReturn(sb.toString() , false));
+                }
+                try {
+                    transaction.rollback();
+                } catch (Exception ex) {
+                    log.info("rollback error ----->" + ex.getMessage() + ":" + e.getCause());
+                }
+            }
+
+            return builder.build();
+        }
 
 
 
