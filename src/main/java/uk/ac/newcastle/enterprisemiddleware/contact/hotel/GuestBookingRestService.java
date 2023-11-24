@@ -156,7 +156,6 @@ import java.util.logging.Logger;
             return builder.build();
         }
 
-
         @Path("/getAllHotels")
         @GET
         @Operation(description = "get all Hotels")
@@ -165,6 +164,15 @@ import java.util.logging.Logger;
             return builder.entity(new ServiceReturn(hotelService.getAllHotels(),true)).build();
         }
 
+        @Path("/booking")
+        @POST
+        @Operation(description = "Add a new booking to the database")
+        @APIResponses(value = {
+                @APIResponse(responseCode = "201", description = "booking created successfully."),
+                @APIResponse(responseCode = "400", description = "Invalid booking supplied in request body"),
+                @APIResponse(responseCode = "409", description = "booking supplied in request body conflicts with an existing booking"),
+                @APIResponse(responseCode = "500", description = "An unexpected error occurred whilst processing the request")
+        })
         public Response booking(Booking booking){
             Response.ResponseBuilder builder = Response.status(Response.Status.CREATED).entity(new ServiceReturn("success!" , true));
             if (booking == null) {
@@ -221,6 +229,9 @@ import java.util.logging.Logger;
             Response.ResponseBuilder builder = Response.status(Response.Status.CREATED);
             return builder.entity(new ServiceReturn(bookingService.getAllBookingById(id),true)).build();
         }
+
+
+
 
 
     }
