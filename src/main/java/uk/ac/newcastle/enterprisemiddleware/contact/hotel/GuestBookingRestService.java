@@ -96,6 +96,13 @@ import java.util.logging.Logger;
             return builder.build();
         }
 
+        @Path("/getAllCustomers")
+        @GET
+        @Operation(description = "get all customers")
+        public Response getAllCustom(){
+            Response.ResponseBuilder builder = Response.status(Response.Status.CREATED);
+            return builder.entity(new ServiceReturn(customerService.getAllCustomers(),true)).build();
+        }
 
 
 
