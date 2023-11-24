@@ -35,6 +35,15 @@ public class Booking {
     @Column(name = "booking_time")
     @NotNull
     private LocalDate bookingTime;
+     public Booking(@NotNull Long customerId, @NotNull Long hotelId, @NotNull LocalDate bookingTime) {
+         this.customerId = customerId;
+         this.hotelId = hotelId;
+         this.bookingTime = bookingTime;
+     }
+
+     public Booking(){
+
+     }
 
     public Long getId() {
         return id;

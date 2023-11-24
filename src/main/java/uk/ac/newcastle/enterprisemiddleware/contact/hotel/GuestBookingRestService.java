@@ -254,7 +254,49 @@ import java.util.logging.Logger;
             return builder.build();
         }
 
+        @Path("/delCustomer/{id}")
+        @DELETE
+        @Operation(description = "del customer record")
+        public Response delCustomer(@PathParam("id") long id){
+            Response.ResponseBuilder builder = Response.status(Response.Status.CREATED).entity(new ServiceReturn("deleted id -> "+ id,true));
+            try{
+                transaction.begin();
+                customerService.delCustomer(id);
+                transaction.commit();
+            }catch (Exception e){
+                builder = Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new ServiceReturn(e.getMessage() , false));
+                log.info("commit error ----->" + id);
+                log.info("cause ----->" + e.getMessage() + ":" + e.getCause());
+                try {
+                    transaction.rollback();
+                } catch (Exception ex) {
+                    log.info("rollback error ----->" + ex.getMessage() + ":" + e.getCause());
+                }
+            }
+            return builder.build();
+        }
 
+        @Path("/delHotel/{id}")
+        @DELETE
+        @Operation(description = "del customer record")
+        public Response delHotel(@PathParam("id") long id){
+            Response.ResponseBuilder builder = Response.status(Response.Status.CREATED).entity(new ServiceReturn("deleted id -> "+ id,true));
+            try{
+                transaction.begin();
+                hotelService.delHotel(id);
+                transaction.commit();
+            }catch (Exception e){
+                builder = Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new ServiceReturn(e.getMessage() , false));
+                log.info("commit error ----->" + id);
+                log.info("cause ----->" + e.getMessage() + ":" + e.getCause());
+                try {
+                    transaction.rollback();
+                } catch (Exception ex) {
+                    log.info("rollback error ----->" + ex.getMessage() + ":" + e.getCause());
+                }
+            }
+            return builder.build();
+        }
 
 
     }
