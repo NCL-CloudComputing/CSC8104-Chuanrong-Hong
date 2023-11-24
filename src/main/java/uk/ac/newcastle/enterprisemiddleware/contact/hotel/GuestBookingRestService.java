@@ -113,7 +113,7 @@ import java.util.logging.Logger;
                 @APIResponse(responseCode = "409", description = "Hotel supplied in request body conflicts with an existing Hotel"),
                 @APIResponse(responseCode = "500", description = "An unexpected error occurred whilst processing the request")
         })
-        public Response createCustom(Hotel hotel){
+        public Response createHotel(Hotel hotel){
             Response.ResponseBuilder builder = Response.status(Response.Status.CREATED).entity(new ServiceReturn("success!" , true));
             if (hotel == null) {
                 return Response.status(Response.Status.BAD_REQUEST).entity(new ServiceReturn("request body is null" , false)).build();
