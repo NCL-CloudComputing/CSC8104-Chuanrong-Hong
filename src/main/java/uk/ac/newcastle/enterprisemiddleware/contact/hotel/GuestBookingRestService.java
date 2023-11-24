@@ -232,6 +232,29 @@ import java.util.logging.Logger;
 
 
 
+        @Path("/delBooking/{id}")
+        @DELETE
+        @Operation(description = "del booking record")
+        public Response delBooking(@PathParam("id") long id){
+            Response.ResponseBuilder builder = Response.status(Response.Status.CREATED).entity(new ServiceReturn("deleted id -> "+ id,true));
+            try{
+                transaction.begin();
+                bookingService.delBooking(id);
+                transaction.commit();
+            }catch (Exception e){
+                builder = Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new ServiceReturn(e.getMessage() , false));
+                log.info("commit error ----->" + id);
+                log.info("cause ----->" + e.getMessage() + ":" + e.getCause());
+                try {
+                    transaction.rollback();
+                } catch (Exception ex) {
+                    log.info("rollback error ----->" + ex.getMessage() + ":" + e.getCause());
+                }
+            }
+            return builder.build();
+        }
+
+
 
 
     }
