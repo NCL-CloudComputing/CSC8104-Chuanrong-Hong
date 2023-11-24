@@ -214,6 +214,13 @@ import java.util.logging.Logger;
             return builder.build();
         }
 
+        @Path("/getAllBookingByUser/{id}")
+        @GET
+        @Operation(description = "get all Hotels")
+        public Response getAllBookingByUser(@PathParam("id") long id){
+            Response.ResponseBuilder builder = Response.status(Response.Status.CREATED);
+            return builder.entity(new ServiceReturn(bookingService.getAllBookingById(id),true)).build();
+        }
 
 
     }
