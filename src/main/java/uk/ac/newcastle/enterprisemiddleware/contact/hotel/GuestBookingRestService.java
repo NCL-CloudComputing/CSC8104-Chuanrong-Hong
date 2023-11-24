@@ -157,6 +157,14 @@ import java.util.logging.Logger;
         }
 
 
+        @Path("/getAllHotels")
+        @GET
+        @Operation(description = "get all Hotels")
+        public Response getAllHotels(){
+            Response.ResponseBuilder builder = Response.status(Response.Status.CREATED);
+            return builder.entity(new ServiceReturn(hotelService.getAllHotels(),true)).build();
+        }
+
 
 
 
