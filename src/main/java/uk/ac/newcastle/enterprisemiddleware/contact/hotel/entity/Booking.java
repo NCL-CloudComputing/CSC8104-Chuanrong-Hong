@@ -17,8 +17,6 @@ import java.time.LocalDate;
  *  */
 
 @Entity
-@NamedQueries({
-})
 @XmlRootElement
 @Table(name = "booking", uniqueConstraints = @UniqueConstraint(columnNames = {"hotel_id" , "booking_time"}))
 public class Booking {
