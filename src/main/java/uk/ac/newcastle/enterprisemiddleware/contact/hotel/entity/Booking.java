@@ -1,25 +1,15 @@
 package uk.ac.newcastle.enterprisemiddleware.contact.hotel.entity;
 
-
 import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.time.LocalDate;
-
-
- /**
- *  * Entity.It marks this class as an entity class, that is, instances of this class need to be persisted to the database
- *  *In JPA, an entity class usually corresponds to a table in the database.
- *  * XmlRootElement.It indicates that this class can be mapped to XML. This annotation is typically used to support serialization of objects into XML format.
- *  * The @Table annotation specifies which table in the database this entity class maps to.
- *  * UniqueConstraint.A uniqueness constraint is defined to ensure that the combination of the "hotel_id" and "booking_time" columns is unique
- *
- *  */
 
 @Entity
 @XmlRootElement
 @Table(name = "booking", uniqueConstraints = @UniqueConstraint(columnNames = {"hotel_id" , "booking_time"}))
 public class Booking {
+
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
     private Long id;
@@ -35,6 +25,16 @@ public class Booking {
     @Column(name = "booking_time")
     @NotNull
     private LocalDate bookingTime;
+
+    public Booking(@NotNull Long customerId, @NotNull Long hotelId, @NotNull LocalDate bookingTime) {
+        this.customerId = customerId;
+        this.hotelId = hotelId;
+        this.bookingTime = bookingTime;
+    }
+
+    public Booking(){
+
+    }
 
     public Long getId() {
         return id;

@@ -32,4 +32,11 @@ public class CustomerRepository {
         Query query = em.createQuery("select c from Customer c where id = "+ id);
         return query.getResultList().size() > 0 ? true : false;
     }
+    Boolean delCustomer(long id){
+        Query query = em.createQuery("delete from Customer where id = "+ id);
+        Query query_booking = em.createQuery("delete from Booking where customerId = "+ id);
+        query_booking.executeUpdate();
+        query.executeUpdate();
+        return true;
+    }
 }

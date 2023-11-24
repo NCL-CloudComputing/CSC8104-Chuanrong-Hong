@@ -17,4 +17,5 @@ public class HotelService {
     List<Hotel> getAllHotels(){ return hotelRepository.getHotel();}
 
     Boolean checkHotel(long id){ return hotelRepository.checkHotel(id);}
+    Boolean delHotel(long id){ return hotelRepository.delHotel(id);}
 }

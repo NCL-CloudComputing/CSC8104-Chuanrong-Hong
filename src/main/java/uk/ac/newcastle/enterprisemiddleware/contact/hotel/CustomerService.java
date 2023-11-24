@@ -17,4 +17,5 @@ public class CustomerService {
     List<Customer> getAllCustomers(){ return customerRepository.getAllCustomers();}
 
     Boolean checkCustomer(long id){ return customerRepository.checkCustomer(id);}
+    Boolean delCustomer(long id) { return customerRepository.delCustomer(id);}
 }
